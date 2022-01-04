@@ -1,4 +1,4 @@
-// swift-tools-version:5.3
+// swift-tools-version: 5.6
 import PackageDescription
 
 let package = Package(
@@ -21,7 +21,7 @@ let package = Package(
     .package(url: "https://github.com/tid-kijyun/Kanna.git", from: "5.2.7")
   ],
   targets: [
-    .target(name: "SwiftGen", dependencies: [
+    .executableTarget(name: "SwiftGen", dependencies: [
       "SwiftGenCLI"
     ]),
     .target(name: "SwiftGenCLI", dependencies: [
@@ -64,7 +64,15 @@ let package = Package(
       .copy("Fixtures/Generated"),
       .copy("Fixtures/Resources"),
       .copy("Fixtures/StencilContexts")
-    ])
+    ]),
+    /// Package plugin that tells SwiftPM how to run `swiftgen` based on
+    /// the configuration file. Client targets use this plugin by listing
+    /// it in their `plugins` parameter.
+    .plugin(
+        name: "SwiftGenPlugin",
+        capability: .buildTool(),
+        dependencies: ["SwiftGen"]
+    ),
   ],
   swiftLanguageVersions: [.v5]
 )
