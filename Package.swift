@@ -74,7 +74,7 @@ let package = Package(
         dependencies: ["SwiftGen"]
     ),
   ],
-  swiftLanguageVersions: [.v5]
+  swiftLanguageVersions: [.version("5.6")]
 )
 
 #if canImport(PackageConfig)
